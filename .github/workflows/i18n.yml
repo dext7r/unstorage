@@ -1,0 +1,60 @@
+name: translator
+
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        required: true
+        type: string
+        default: chinese
+  push:
+    branches:
+      - i18n
+    paths:
+      - docs/**
+  pull_request:
+    branches:
+      - i18n
+    paths:
+      - docs/**
+
+jobs:
+  translator:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - run: npx ai-markdown-translator -i ./docs -e md -l ${{ inputs.language }}
+
+      - name: Commit and push changes if any
+        run: |
+          if git diff --exit-code; then
+            echo "No changes to commit"
+          else
+            git config --local user.email "action@h7ml.cn"
+            git config --local user.name "GitHub Action"
+            git config advice.ignoredHook false
+            git commit -am "i18n: translate docs"
+            git push -f origin i18n
+          fi
+
+      - name: Create or update pull request
+        run: |
+          pr_exists=$(gh pr list --state open --head i18n | wc -l)
+          if [ "$pr_exists" -eq 0 ]; then
+            gh pr create --title "i18n: translate docs" --body "i18n: translate docs"
+          else
+            gh pr edit --title "i18n: translate docs" --body "i18n: translate docs"
+          fi
