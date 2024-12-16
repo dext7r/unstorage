@@ -2,18 +2,18 @@
 icon: ph:browser-thin
 ---
 
-# Browser
+# 浏览器
 
-> Browser based storages.
+> 基于浏览器的存储。
 
-## Local Storage
+## 本地存储
 
-Store data in localStorage.
+在 `localStorage` 中存储数据。
 
-### Usage
+### 使用方法
 
 ::read-more{to="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage"}
-Learn more about localStorage.
+了解更多关于 `localStorage` 的信息。
 ::
 
 ```js
@@ -25,18 +25,18 @@ const storage = createStorage({
 });
 ```
 
-**Options:**
+**选项：**
 
-- `base`: Add `${base}:` to all keys to avoid collision
-- `localStorage`: Optionally provide `localStorage` object
-- `window`: Optionally provide `window` object
+- `base`: 向所有键添加 `${base}:` 以避免冲突
+- `localStorage`: 可选地提供 `localStorage` 对象
+- `window`: 可选地提供 `window` 对象
 
-## Session Storage
+## 会话存储
 
-> Store data in sessionStorage.
+> 在 `sessionStorage` 中存储数据。
 
 ::read-more{to="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage"}
-Learn more about sessionStorage.
+了解更多关于 `sessionStorage` 的信息。
 ::
 
 ```js
@@ -48,27 +48,27 @@ const storage = createStorage({
 });
 ```
 
-**Options:**
+**选项：**
 
-- `base`: Add `${base}:` to all keys to avoid collision
-- `sessionStorage`: Optionally provide `sessionStorage` object
-- `window`: Optionally provide `window` object
+- `base`: 向所有键添加 `${base}:` 以避免冲突
+- `sessionStorage`: 可选地提供 `sessionStorage` 对象
+- `window`: 可选地提供 `window` 对象
 
 ## IndexedDB
 
-Store key-value in IndexedDB.
+在 IndexedDB 中存储键值对。
 
-### Usage
+### 使用方法
 
 ::read-more{to="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API"}
-Learn more about IndexedDB.
+了解更多关于 IndexedDB 的信息。
 ::
 
-To use it, you will need to install [`idb-keyval`](https://github.com/jakearchibald/idb-keyval) in your project:
+要使用它，您需要在项目中安装 [`idb-keyval`](https://github.com/jakearchibald/idb-keyval)：
 
 :pm-install{name="idb-keyval"}
 
-Usage:
+用法：
 
 ```js
 import { createStorage } from "unstorage";
@@ -79,12 +79,12 @@ const storage = createStorage({
 });
 ```
 
-**Options:**
+**选项：**
 
-- `base`: Add `${base}:` to all keys to avoid collision
-- `dbName`: Custom name for database. Defaults to `keyval-store`
-- `storeName`: Custom name for store. Defaults to `keyval`
+- `base`: 向所有键添加 `${base}:` 以避免冲突
+- `dbName`: 数据库的自定义名称。默认值为 `keyval-store`
+- `storeName`: 存储的自定义名称。默认值为 `keyval`
 
 ::note
-IndexedDB is a browser database. Avoid using this preset on server environments.
+IndexedDB 是一个浏览器数据库。避免在服务器环境中使用这个预设。
 ::

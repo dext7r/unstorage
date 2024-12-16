@@ -4,21 +4,21 @@ icon: teenyicons:mongodb-outline
 
 # MongoDB
 
-> Store data in MongoDB using Node.js MongoDB package.
+> 使用 Node.js MongoDB 包在 MongoDB 中存储数据。
 
-## Usage
+## 用法
 
 ::read-more{to="https://www.mongodb.com/"}
-Learn more about MongoDB.
+了解更多关于 MongoDB 的信息。
 ::
 
-This driver stores KV information in a MongoDB collection with a separate document for each key value pair.
+此驱动程序将 KV 信息存储在 MongoDB 集合中，每个键值对有一个单独的文档。
 
-To use it, you will need to install `mongodb` in your project:
+要使用它，您需要在项目中安装 `mongodb`：
 
 :pm-install{name="mongodb"}
 
-Usage:
+用法：
 
 ```js
 import { createStorage } from "unstorage";
@@ -33,14 +33,14 @@ const storage = createStorage({
 });
 ```
 
-**Authentication:**
+**认证：**
 
-The driver supports the following authentication methods:
+该驱动程序支持以下认证方法：
 
-- **`connectionString`**: The MongoDB connection string. This is the only way to authenticate.
+- **`connectionString`**：MongoDB 连接字符串。这是进行身份验证的唯一方法。
 
-**Options:**
+**选项：**
 
-- **`connectionString`** (required): The connection string to use to connect to the MongoDB database. It should be in the format `mongodb://<username>:<password>@<host>:<port>/<database>`.
-- `databaseName`: The name of the database to use. Defaults to `unstorage`.
-- `collectionName`: The name of the collection to use. Defaults to `unstorage`.
+- **`connectionString`**（必需）：用于连接到 MongoDB 数据库的连接字符串。应采用格式 `mongodb://<username>:<password>@<host>:<port>/<database>`。
+- `databaseName`：要使用的数据库名称。默认为 `unstorage`。
+- `collectionName`：要使用的集合名称。默认为 `unstorage`。

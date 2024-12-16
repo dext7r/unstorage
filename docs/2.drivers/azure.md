@@ -6,21 +6,21 @@ icon: mdi:microsoft-azure
 
 ## Azure App Configuration
 
-Store data in the key-value store of Azure App Configuration.
+将数据存储在 Azure App Configuration 的键值存储中。
 
-### Usage
+### 使用方法
 
 ::note{to="https://learn.microsoft.com/en-us/azure/azure-app-configuration/overview"}
-Learn more about Azure App Configuration.
+了解有关 Azure App Configuration 的更多信息。
 ::
 
-This driver uses the configuration store as a key-value store. It uses the `key` as the name and the `value` as content. You can also use labels to differentiate between different environments (dev, prod, etc.) and use prefixes to differentiate between different applications (app01, app02, etc.).
+该驱动程序使用配置存储作为键值存储。它将 `key` 用作名称，`value` 用作内容。您还可以使用标签来区分不同的环境（开发、生产等），并使用前缀来区分不同的应用程序（app01、app02 等）。
 
-To use it, you will need to install `@azure/app-configuration` and `@azure/identity` in your project:
+要使用它，您需要在项目中安装 `@azure/app-configuration` 和 `@azure/identity`：
 
 :pm-install{name="@azure/app-configuration @azure/identity"}
 
-Usage:
+使用示例：
 
 ```js
 import { createStorage } from "unstorage";
@@ -35,39 +35,39 @@ const storage = createStorage({
 });
 ```
 
-**Authentication:**
+**身份验证：**
 
-The driver supports the following authentication methods:
+该驱动程序支持以下身份验证方法：
 
-- **`DefaultAzureCredential`**: This is the recommended way to authenticate. It will use managed identity or environment variables to authenticate the request. It will also work in a local environment by trying to use Azure CLI or Azure PowerShell to authenticate. <br>
-  ⚠️ Make sure that your Managed Identity or personal account has the `App Configuration Data Owner` role assigned to it, even if you already are the `Contributor` or `Owner` on the app configuration resource.
-- **`connectionString`**: The app configuration connection string. Not recommended for use in production.
+- **`DefaultAzureCredential`**：这是推荐的身份验证方式。它会使用托管身份或环境变量来验证请求。它还将在本地环境中通过尝试使用 Azure CLI 或 Azure PowerShell 进行身份验证。 <br>
+  ⚠️ 确保您的托管身份或个人帐户具有分配的 `App Configuration Data Owner` 角色，即使您已在应用程序配置资源上是 `Contributor` 或 `Owner`。
+- **`connectionString`**：应用程序配置连接字符串。建议在生产中不使用。
 
-**Options:**
+**选项：**
 
-- `appConfigName`: The name of the app configuration resource.
-- `endpoint`: The endpoint of the app configuration resource.
-- `connectionString`: The connection string of the app configuration resource.
-- `prefix`: Optional prefix for keys. This can be used to isolate keys from different applications in the same Azure App Configuration instance. E.g. "app01" results in keys like "app01:foo" and "app01:bar".
-- `label`: Optional label for keys. If not provided, all keys will be created and listed without labels. This can be used to isolate keys from different environments in the same Azure App Configuration instance. E.g. "dev" results in keys like "foo" and "bar" with the label "dev".
+- `appConfigName`：应用程序配置资源的名称。
+- `endpoint`：应用程序配置资源的终结点。
+- `connectionString`：应用程序配置资源的连接字符串。
+- `prefix`：键的可选前缀。这可以用于在同一 Azure App Configuration 实例中隔离来自不同应用程序的键。例如， "app01" 生成的键类似于 "app01:foo" 和 "app01:bar"。
+- `label`：键的可选标签。如果未提供，将创建并列出所有没有标签的键。这可以用于在同一 Azure App Configuration 实例中隔离来自不同环境的键。例如，"dev" 生成的键类似于带有标签 "dev" 的 "foo" 和 "bar"。
 
 ## Azure Cosmos DB
 
-Store data in Azure Cosmos DB NoSQL API documents.
+将数据存储在 Azure Cosmos DB NoSQL API 文档中。
 
-### Usage
+### 使用方法
 
 ::note{to="https://azure.microsoft.com/en-us/services/cosmos-db/"}
-Learn more about Azure Cosmos DB.
+了解更多 Azure Cosmos DB 的信息。
 ::
 
-This driver stores KV information in a NoSQL API Cosmos DB collection as documents. It uses the `id` field as the key and adds `value` and `modified` fields to the document.
+该驱动程序将 KV 信息存储在 NoSQL API Cosmos DB 集合中作为文档。它使用 `id` 字段作为键，并将 `value` 和 `modified` 字段添加到文档中。
 
-To use it, you will need to install `@azure/cosmos` and `@azure/identity` in your project:
+要使用它，您需要在项目中安装 `@azure/cosmos` 和 `@azure/identity`：
 
 :pm-install{name="@azure/cosmos @azure/identity"}
 
-Usage:
+使用示例：
 
 ```js
 import { createStorage } from "unstorage";
@@ -81,39 +81,39 @@ const storage = createStorage({
 });
 ```
 
-**Authentication:**
+**身份验证：**
 
-- **`DefaultAzureCredential`**: This is the recommended way to authenticate. It will use managed identity or environment variables to authenticate the request. It will also work in a local environment by trying to use Azure CLI or Azure PowerShell to authenticate. <br>
-  ⚠️ Make sure that your Managed Identity or personal account has at least `Cosmos DB Built-in Data Contributor` role assigned to it. If you already are the `Contributor` or `Owner` on the resource it should also be enough, but that does not accomplish a model of least privilege.
-- **`accountKey`**: CosmosDB account key. If not provided, the driver will use the DefaultAzureCredential (recommended).
+- **`DefaultAzureCredential`**：这是推荐的身份验证方式。它会使用托管身份或环境变量来验证请求。它还将在本地环境中通过尝试使用 Azure CLI 或 Azure PowerShell 进行身份验证。 <br>
+  ⚠️ 确保您的托管身份或个人帐户至少分配了 `Cosmos DB Built-in Data Contributor` 角色。如果您已是该资源的 `Contributor` 或 `Owner`，这也应该足够，但这并未实现最小权限模型。
+- **`accountKey`**：CosmosDB 账户密钥。如果未提供，驱动程序将使用 DefaultAzureCredential（推荐）。
 
-**Options:**
+**选项：**
 
-- **`endpoint`** (required): CosmosDB endpoint in the format of `https://<account>.documents.azure.com:443/`.
-- `accountKey`: CosmosDB account key. If not provided, the driver will use the DefaultAzureCredential (recommended).
-- `databaseName`: The name of the database to use. Defaults to `unstorage`.
-- `containerName`: The name of the container to use. Defaults to `unstorage`.
+- **`endpoint`**（必需）：CosmosDB 终结点，格式为 `https://<account>.documents.azure.com:443/`。
+- `accountKey`：CosmosDB 账户密钥。如果未提供，驱动程序将使用 DefaultAzureCredential（推荐）。
+- `databaseName`：要使用的数据库名称。默认为 `unstorage`。
+- `containerName`：要使用的容器名称。默认为 `unstorage`。
 
 ## Azure Key Vault
 
-Store data in a Azure Key Vault secrets.
+将数据存储在 Azure Key Vault 秘密中。
 
-### Usage
+### 使用方法
 
 ::note{to="https://docs.microsoft.com/en-us/azure/key-vault/secrets/about-secrets"}
-Learn more about Azure Key Vault secrets.
+了解更多有关 Azure Key Vault 秘密的信息。
 ::
 
-This driver stores KV information in Azure Key Vault secrets by using the key as secret id and the value as secret content.
-Please be aware that key vault secrets don't have the fastest access time and are not designed for high throughput. You also have to disable purge protection for your key vault to be able to delete secrets. This implementation deletes and purges a secret when it is deleted to avoid conflicts with soft delete.
+该驱动程序通过将键用作秘密 ID，将值用作秘密内容，来将 KV 信息存储在 Azure Key Vault 秘密中。
+请注意，密钥保管库秘密的访问时间并不是最快的，并且并未设计用于高吞吐量。您还必须禁用密钥保管库的清除保护才能删除秘密。此实现会在删除时删除并清除秘密，以避免与软删除发生冲突。
 
-⚠️ Be aware that this driver stores the keys of your `key:value` pairs in an encoded way in Key Vault to avoid conflicts with naming requirements for secrets. This means that you will not be able to access manually (outside of unstorage) created secrets inside your Key Vault, as long as they are not encoded in the same way.
+⚠️ 请注意，该驱动程序以编码方式存储您的 `key:value` 对中的键，以避免与秘密的命名要求发生冲突。这意味着，只要密钥不存在以相同方式编码，您将无法访问手动创建的（在 unstorage 外部）密钥保管库中的秘密。
 
-To use it, you will need to install `@azure/keyvault-secrets` and `@azure/identity` in your project:
+要使用它，您需要在项目中安装 `@azure/keyvault-secrets` 和 `@azure/identity`：
 
 :pm-install{name="@azure/keyvault-secrets @azure/identity"}
 
-Usage:
+使用示例：
 
 ```js
 import { createStorage } from "unstorage";
@@ -126,37 +126,37 @@ const storage = createStorage({
 });
 ```
 
-**Authentication:**
+**身份验证：**
 
-The driver supports the following authentication methods:
+该驱动程序支持以下身份验证方法：
 
-- **`DefaultAzureCredential`**: This is the recommended way to authenticate. It will use managed identity or environment variables to authenticate the request. It will also work in a local environment by trying to use Azure CLI or Azure PowerShell to authenticate.
+- **`DefaultAzureCredential`**：这是推荐的身份验证方式。它会使用托管身份或环境变量来验证请求。它还将在本地环境中通过尝试使用 Azure CLI 或 Azure PowerShell 进行身份验证。
 
-⚠️ Make sure that your Managed Identity or personal account has either the `Key Vault Secrets Officer` (or `Key Vault Secrets User` for read-only) RBAC role assigned or is a member of an access policy that grants `Get`, `List`, `Set`, `Delete` and `Purge` secret permissions.
+⚠️ 确保您的托管身份或个人账户具有分配的 `Key Vault Secrets Officer`（或 `Key Vault Secrets User` 仅限只读）RBAC 角色，或是一个访问策略的成员，该策略授予 `Get`、`List`、`Set`、`Delete` 和 `Purge` 秘密权限。
 
-**Options:**
+**选项：**
 
-- **`vaultName`** (required): The name of the key vault to use.
-- `serviceVersion`: Version of the Azure Key Vault service to use. Defaults to 7.3.
-- `pageSize`: The number of entries to retrieve per request. Impacts getKeys() and clear() performance. Maximum value is 25.
+- **`vaultName`**（必需）：要使用的密钥保管库的名称。
+- `serviceVersion`：要使用的 Azure Key Vault 服务版本。默认为 7.3。
+- `pageSize`：每个请求要检索的条目数。影响 getKeys() 和 clear() 的性能。最大值为 25。
 
 ## Azure Blob Storage
 
-Store data in a Azure blob storage.
+将数据存储在 Azure blob 存储中。
 
-### Usage
+### 使用方法
 
 ::note{to="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/storage/storage-blob"}
-Learn more about Azure blob storage.
+了解关于 Azure blob 存储的更多信息。
 ::
 
-This driver stores KV information in a Azure blob storage blob. The same container is used for all entries. Each entry is stored in a separate blob with the key as the blob name and the value as the blob content.
+该驱动程序将 KV 信息存储在 Azure blob 存储 blob 中。所有条目使用相同的容器。每个条目存储在一个单独的 blob 中，键作为 blob 名称，值作为 blob 内容。
 
-To use it, you will need to install `@azure/storage-blob` and `@azure/identity` in your project:
+要使用它，您需要在项目中安装 `@azure/storage-blob` 和 `@azure/identity`：
 
 :pm-install{name="@azure/storage-blob @azure/identity"}
 
-Please make sure that the container you want to use exists in your storage account.
+请确保您要使用的容器在您的存储账户中存在。
 
 ```js
 import { createStorage } from "unstorage";
@@ -169,47 +169,47 @@ const storage = createStorage({
 });
 ```
 
-**Authentication:**
+**身份验证：**
 
-The driver supports the following authentication methods:
+该驱动程序支持以下身份验证方法：
 
-- **`DefaultAzureCredential`**: This is the recommended way to authenticate. It will use managed identity or environment variables to authenticate the request. It will also work in a local environment by trying to use Azure CLI or Azure PowerShell to authenticate. <br>
-  ⚠️ Make sure that your Managed Identity or personal account has the `Storage Blob Data Contributor` role assigned to it, even if you already are `Contributor` or `Owner` on the storage account.
-- **`AzureNamedKeyCredential`** (only available in Node.js runtime): This will use the `accountName` and `accountKey` to authenticate the request.
-- **`AzureSASCredential`**: This will use the `accountName` and `sasToken` to authenticate the request.
-- **connection string** (only available in Node.js runtime): This will use the `connectionString` to authenticate the request. This is not recommended as it will expose your account key in plain text.
+- **`DefaultAzureCredential`**：这是推荐的身份验证方式。它会使用托管身份或环境变量来验证请求。它还将在本地环境中通过尝试使用 Azure CLI 或 Azure PowerShell 进行身份验证。 <br>
+  ⚠️ 确保您的托管身份或个人帐户具有分配的 `Storage Blob Data Contributor` 角色，即使您已在存储帐户上是 `Contributor` 或 `Owner`。
+- **`AzureNamedKeyCredential`**（仅在 Node.js 运行时可用）：这将使用 `accountName` 和 `accountKey` 来验证请求。
+- **`AzureSASCredential`**：这将使用 `accountName` 和 `sasToken` 来验证请求。
+- **连接字符串**（仅在 Node.js 运行时可用）：这将使用 `connectionString` 来验证请求。不推荐使用，因为它将以明文形式暴露您的帐户密钥。
 
-**Options:**
+**选项：**
 
-- **`accountName`** (required): The name of your storage account.
-- `containerName`: The name of the blob container to use. Defaults to `unstorage`.
-- `accountKey`: The account key to use for authentication. This is only required if you are using `AzureNamedKeyCredential`.
-- `sasKey`: The SAS token to use for authentication. This is only required if you are using `AzureSASCredential`.
-- `connectionString`: The storage accounts' connection string. `accountKey` and `sasKey` take precedence.
+- **`accountName`**（必需）：您的存储帐户的名称。
+- `containerName`：要使用的 blob 容器的名称。默认为 `unstorage`。
+- `accountKey`：用于身份验证的账户密钥。仅在使用 `AzureNamedKeyCredential` 时需要。
+- `sasKey`：用于身份验证的 SAS 令牌。仅在使用 `AzureSASCredential` 时需要。
+- `connectionString`：存储帐户的连接字符串。`accountKey` 和 `sasKey` 具有优先权。
 
 ## Azure Table Storage
 
-Store data in a Azure table storage.
+将数据存储在 Azure 表存储中。
 
-### Usage
+### 使用方法
 
 ::note{to="https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/tables/data-tables"}
-Learn more about Azure table storage.
+了解有关 Azure 表存储的更多信息。
 ::
 
 ::warning
-This driver is currently not compatible with edge workers like Cloudflare Workers or Vercel Edge Functions. There may be a http based driver in the future.
+该驱动程序当前不兼容于 Cloudflare Workers 或 Vercel Edge Functions 等边缘工作者。未来可能会有基于 http 的驱动程序。
 ::
 
-Store data in a [data-tables]().
+将数据存储在 [data-tables]() 中。
 
-This driver stores KV information in a Azure table storage. The same partition key is used for all keys and the field `unstorageValue` is used to store the value.
+该驱动程序将 KV 信息存储在 Azure 表存储中。所有键使用相同的分区键，字段 `unstorageValue` 用于存储值。
 
-To use it, you will need to install `@azure/data-table` and `@azure/identity` in your project:
+要使用它，您需要在项目中安装 `@azure/data-table` 和 `@azure/identity`：
 
 :pm-install{name="@azure/data-table @azure/identity"}
 
-Please make sure that the table you want to use exists in your storage account.
+请确保您要使用的表在您的存储帐户中存在。
 
 ```js
 import { createStorage } from "unstorage";
@@ -222,22 +222,21 @@ const storage = createStorage({
 });
 ```
 
-**Authentication:**
+**身份验证：**
 
-The driver supports the following authentication methods:
+该驱动程序支持以下身份验证方法：
 
-- **`DefaultAzureCredential`**: This is the recommended way to authenticate. It will use managed identity or environment variables to authenticate the request. It will also work in a local environment by trying to use Azure CLI or Azure PowerShell to authenticate.
+- **`DefaultAzureCredential`**：这是推荐的身份验证方式。它会使用托管身份或环境变量来验证请求。它还将在本地环境中通过尝试使用 Azure CLI 或 Azure PowerShell 进行身份验证。
 
-  ⚠️ Make sure that your Managed Identity or personal account has the `Storage Table Data Contributor` role assigned to it, even if you already are `Contributor` or `Owner` on the storage account.
+  ⚠️ 确保您的托管身份或个人帐户具有分配的 `Storage Table Data Contributor` 角色，即使您已在存储帐户中是 `Contributor` 或 `Owner`。
 
-- **`AzureNamedKeyCredential`** (only available in Node.js runtime): This will use the `accountName` and `accountKey` to authenticate the request.
-- **`AzureSASCredential`**: This will use the `accountName` and `sasToken` to authenticate the request.
-- **connection string** (only available in Node.js runtime): This will use the `connectionString` to authenticate the request. This is not recommended as it will expose your account key in plain text.
+- **`AzureNamedKeyCredential`**（仅在 Node.js 运行时可用）：这将使用 `accountName` 和 `accountKey` 验证请求。
+- **`AzureSASCredential`**：这将使用 `accountName` 和 `sasToken` 验证请求。
+- **连接字符串**（仅在 Node.js 运行时可用）：这将使用 `connectionString` 验证请求。不推荐使用，因为它将以明文形式暴露您的帐户密钥。
 
-**Options:**
+**选项：**
 
-- **`accountName`** (required): The name of your storage account.
-- `tableName`: The name of the table to use. Defaults to `unstorage`.
-- `partitionKey`: The partition key to use. Defaults to `unstorage`.
-- `accountKey`: The account key to use for authentication. This is only required if you are using `AzureNamedKeyCredential`.
--
+- **`accountName`**（必需）：您的存储帐户的名称。
+- `tableName`：要使用的表的名称。默认为 `unstorage`。
+- `partitionKey`：要使用的分区键。默认为 `unstorage`。
+- `accountKey`：用于身份验证的帐户密钥。仅在使用 `AzureNamedKeyCredential` 时需要。

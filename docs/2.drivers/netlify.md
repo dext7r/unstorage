@@ -4,14 +4,14 @@ icon: teenyicons:netlify-solid
 
 # Netlify Blobs
 
-> Store data in Netlify Blobs.
+> 在 Netlify Blobs 中存储数据。
 
-Store data in a [Netlify Blobs](https://docs.netlify.com/blobs/overview/) store. This is supported in both [edge](#using-in-netlify-edge) and Node.js function runtimes, as well as during builds.
+在 [Netlify Blobs](https://docs.netlify.com/blobs/overview/) 存储中存储数据。此功能支持 [edge](#using-in-netlify-edge) 和 Node.js 函数运行时，以及在构建过程中使用。
 
 ::read-more{title="Netlify Blobs" to="https://docs.netlify.com/blobs/overview/"}
 ::
 
-## Usage
+## 用法
 
 ```js
 import { createStorage } from "unstorage";
@@ -24,7 +24,7 @@ const storage = createStorage({
 });
 ```
 
-You can create a deploy-scoped store by setting `deployScoped` option to `true`. This will mean that the deploy only has access to its own store. The store is managed alongside the deploy, with the same deploy previews, deletes, and rollbacks. This is required during builds, which only have access to deploy-scoped stores.
+您可以通过将 `deployScoped` 选项设置为 `true` 来创建一个部署范围的存储。这意味着该部署只能访问其自己的存储。该存储与部署一起管理，具有相同的部署预览、删除和回滚功能。在构建过程中，这是必需的，因为构建只能访问部署范围的存储。
 
 ```js
 import { createStorage } from "unstorage";
@@ -37,7 +37,7 @@ const storage = createStorage({
 });
 ```
 
-To use, you will need to install `@netlify/blobs` as dependency or devDependency in your project:
+要使用，您需要在项目中将 `@netlify/blobs` 安装为依赖项或开发依赖项：
 
 ```json
 {
@@ -47,23 +47,23 @@ To use, you will need to install `@netlify/blobs` as dependency or devDependency
 }
 ```
 
-**Options:**
+**选项：**
 
-- `name` - The name of the store to use. It is created if needed. This is required except for deploy-scoped stores.
-- `deployScoped` - If set to `true`, the store is scoped to the deploy. This means that it is only available from that deploy, and will be deleted or rolled-back alongside it.
-- `siteID` - Required during builds, where it is available as `constants.SITE_ID`. At runtime this is set automatically.
-- `token` - Required during builds, where it is available as `constants.NETLIFY_API_TOKEN`. At runtime this is set automatically.
+- `name` - 要使用的存储名称。必要时会创建。除部署范围的存储外，这是必需的。
+- `deployScoped` - 如果设置为 `true`，则存储的范围仅限于该部署。这意味着它仅在该部署可用，并将随之删除或回滚。
+- `siteID` - 在构建过程中是必需的，可以通过 `constants.SITE_ID` 访问。在运行时会自动设置。
+- `token` - 在构建过程中是必需的，可以通过 `constants.NETLIFY_API_TOKEN` 访问。在运行时会自动设置。
 
-**Advanced options:**
+**高级选项：**
 
-These are not normally needed, but are available for advanced use cases or for use in unit tests.
+这些通常不需要，但可以用于高级用例或单元测试中。
 
 - `apiURL`
 - `edgeURL`
 
-## Using in netlify edge
+## 在 Netlify edge 中使用
 
-When using Unstorage in a Netlify edge function you should use a URL import. This does not apply if you are compiling your code in a framework - just if you are creating your own edge functions.
+在 Netlify edge 函数中使用 Unstorage 时，您应该使用 URL 导入。如果您在框架中编译代码，则不适用 - 只适用于创建自己的 edge 函数。
 
 ```js
 import { createStorage } from "https://esm.sh/unstorage";
@@ -81,10 +81,9 @@ export default async function handler(request: Request) {
 }
 ```
 
-## Updating stores from Netlify Blobs beta
+## 从 Netlify Blobs beta 更新存储
 
-There has been a change in the way global blob stores are stored in `@netlify/blobs` version `7.0.0` which means that you will not be able to access objects in global stores created by older versions until you migrate them. This does not affect deploy-scoped stores, nor does it affect objects created with the new version. You can migrate objects in your old stores by running the following command in the project directory using the latest version of the Netlify CLI:
+`@netlify/blobs` 版本 `7.0.0` 中对全局 blob 存储的存储方式进行了更改，这意味着在您迁移之前，您将无法访问由旧版本创建的全局存储中的对象。这不会影响部署范围的存储，也不会影响新版本创建的对象。您可以通过在项目目录中使用最新版本的 Netlify CLI 运行以下命令来迁移旧存储中的对象：
 
 ```sh
 netlify recipes blobs-migrate <name of store>
-```

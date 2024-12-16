@@ -4,69 +4,69 @@ icon: devicon-plain:cloudflareworkers
 
 # Cloudflare
 
-> Store data in Cloudflare KV or R2 storage.
+> 在 Cloudflare KV 或 R2 存储中存储数据。
 
-## CloudFlare KV (binding)
+## CloudFlare KV（绑定）
 
-> Store data in Cloudflare KV and access from worker bindings.
+> 在 Cloudflare KV 中存储数据并通过 Worker 绑定进行访问。
 
-### Usage
+### 使用方法
 
 ::read-more{to="https://developers.cloudflare.com/workers/runtime-apis/kv"}
-Learn more about Cloudflare KV.
+了解更多关于 Cloudflare KV 的信息。
 ::
 
-**Note:** This driver only works in a cloudflare worker environment, use `cloudflare-kv-http` for other environments.
+**注意：** 此驱动程序仅在 Cloudflare Worker 环境中有效，对于其他环境，请使用 `cloudflare-kv-http`。
 
-You need to create and assign a KV. See [KV Bindings](https://developers.cloudflare.com/workers/runtime-apis/kv#kv-bindings) for more information.
+您需要创建并分配一个 KV。有关更多信息，请参见 [KV 绑定](https://developers.cloudflare.com/workers/runtime-apis/kv#kv-bindings)。
 
 ```js
 import { createStorage } from "unstorage";
 import cloudflareKVBindingDriver from "unstorage/drivers/cloudflare-kv-binding";
 
-// Using binding name to be picked from globalThis
+// 使用从 globalThis 中选择的绑定名称
 const storage = createStorage({
   driver: cloudflareKVBindingDriver({ binding: "STORAGE" }),
 });
 
-// Directly setting binding
+// 直接设置绑定
 const storage = createStorage({
   driver: cloudflareKVBindingDriver({ binding: globalThis.STORAGE }),
 });
 
-// Using from Durable Objects and Workers using Modules Syntax
+// 使用 Durable Objects 和模块语法从 Workers 中获取
 const storage = createStorage({
   driver: cloudflareKVBindingDriver({ binding: this.env.STORAGE }),
 });
 
-// Using outside of Cloudflare Workers (like Node.js)
-// Use cloudflare-kv-http
+// 在 Cloudflare Workers 之外使用（如 Node.js）
+// 使用 cloudflare-kv-http
 ```
 
-**Options:**
+**选项：**
 
-- `binding`: KV binding or name of namespace. Default is `STORAGE`.
-- `base`: Adds prefix to all stored keys
+- `binding`：KV 绑定或命名空间的名称。默认值为 `STORAGE`。
+- `base`：为所有存储的键添加前缀。
 
-## Cloudflare KV (http)
+## Cloudflare KV（http）
 
-> Store data in Cloudflare KV using the Cloudflare API v4.
+> 使用 Cloudflare API v4 在 Cloudflare KV 中存储数据。
 
-### Usage
+### 使用方法
 
 ::read-more{to="https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-namespaces"}
-Learn more about Cloudflare KV API.
+了解更多关于 Cloudflare KV API 的信息。
 ::
 
-You need to create a KV namespace. See [KV Bindings](https://developers.cloudflare.com/workers/runtime-apis/kv#kv-bindings) for more information.
+您需要创建一个 KV 命名空间。有关更多信息，请参见 [KV 绑定](https://developers.cloudflare.com/workers/runtime-apis/kv#kv-bindings)。
 
-**Note:** This driver uses native fetch and works universally! For a direct usage in a cloudflare worker environment, please use `cloudflare-kv-binding` driver for best performance!
+**注意：** 此驱动程序使用本地 fetch，通用有效！对于 Cloudflare Worker 环境中的直接使用，请使用 `cloudflare-kv-binding` 驱动程序以获取最佳性能！
 
 ```js
 import { createStorage } from "unstorage";
 import cloudflareKVHTTPDriver from "unstorage/drivers/cloudflare-kv-http";
 
-// Using `apiToken`
+// 使用 `apiToken`
 const storage = createStorage({
   driver: cloudflareKVHTTPDriver({
     accountId: "my-account-id",
@@ -75,7 +75,7 @@ const storage = createStorage({
   }),
 });
 
-// Using `email` and `apiKey`
+// 使用 `email` 和 `apiKey`
 const storage = createStorage({
   driver: cloudflareKVHTTPDriver({
     accountId: "my-account-id",
@@ -85,7 +85,7 @@ const storage = createStorage({
   }),
 });
 
-// Using `userServiceKey`
+// 使用 `userServiceKey`
 const storage = createStorage({
   driver: cloudflareKVHTTPDriver({
     accountId: "my-account-id",
@@ -95,74 +95,74 @@ const storage = createStorage({
 });
 ```
 
-**Options:**
+**选项：**
 
-- `accountId`: Cloudflare account ID.
-- `namespaceId`: The ID of the KV namespace to target. **Note:** be sure to use the namespace's ID, and not the name or binding used in a worker environment.
-- `apiToken`: API Token generated from the [User Profile 'API Tokens' page](https://dash.cloudflare.com/profile/api-tokens).
-- `email`: Email address associated with your account. May be used along with `apiKey` to authenticate in place of `apiToken`.
-- `apiKey`: API key generated on the "My Account" page of the Cloudflare console. May be used along with `email` to authenticate in place of `apiToken`.
-- `userServiceKey`: A special Cloudflare API key good for a restricted set of endpoints. Always begins with "v1.0-", may vary in length. May be used to authenticate in place of `apiToken` or `apiKey` and `email`.
-- `apiURL`: Custom API URL. Default is `https://api.cloudflare.com`.
-- `base`: Adds prefix to all stored keys
+- `accountId`：Cloudflare 账户 ID。
+- `namespaceId`：要访问的 KV 命名空间的 ID。**注意：** 确保使用命名空间的 ID，而不是 Worker 环境中使用的名称或绑定。
+- `apiToken`：从 [用户个人资料“API Tokens”页面](https://dash.cloudflare.com/profile/api-tokens) 生成的 API Token。
+- `email`：与您的账户关联的电子邮件地址。可以与 `apiKey` 一起使用以替代 `apiToken` 进行身份验证。
+- `apiKey`：在 Cloudflare 控制台的“我的账户”页面生成的 API 密钥。可以与 `email` 一起使用以替代 `apiToken` 进行身份验证。
+- `userServiceKey`：一种特殊的 Cloudflare API 密钥，仅用于有限的端点。始终以 "v1.0-" 开头，长度可能不同。可以替代 `apiToken` 或 `apiKey` 和 `email` 进行身份验证。
+- `apiURL`：自定义 API URL。默认值为 `https://api.cloudflare.com`。
+- `base`：为所有存储的键添加前缀。
 
-**Transaction options:**
+**事务选项：**
 
-- `ttl`: Supported for `setItem(key, value, { ttl: number /* seconds min 60 */ })`
+- `ttl`：支持 `setItem(key, value, { ttl: number /* seconds min 60 */ })`。
 
-**Supported methods:**
+**支持的方法：**
 
-- `getItem`: Maps to [Read key-value pair](https://api.cloudflare.com/#workers-kv-namespace-read-key-value-pair) `GET accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`
-- `hasItem`: Maps to [Read key-value pair](https://api.cloudflare.com/#workers-kv-namespace-read-key-value-pair) `GET accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`. Returns `true` if `<parsed response body>.success` is `true`.
-- `setItem`: Maps to [Write key-value pair](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair) `PUT accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`
-- `removeItem`: Maps to [Delete key-value pair](https://api.cloudflare.com/#workers-kv-namespace-delete-key-value-pair) `DELETE accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`
-- `getKeys`: Maps to [List a Namespace's Keys](https://api.cloudflare.com/#workers-kv-namespace-list-a-namespace-s-keys) `GET accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/keys`
-- `clear`: Maps to [Delete key-value pair](https://api.cloudflare.com/#workers-kv-namespace-delete-multiple-key-value-pairs) `DELETE accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/bulk`
+- `getItem`：映射到 [读取键值对](https://api.cloudflare.com/#workers-kv-namespace-read-key-value-pair) `GET accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`。
+- `hasItem`：映射到 [读取键值对](https://api.cloudflare.com/#workers-kv-namespace-read-key-value-pair) `GET accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`。如果 `<parsed response body>.success` 为 `true`，则返回 `true`。
+- `setItem`：映射到 [写入键值对](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair) `PUT accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`。
+- `removeItem`：映射到 [删除键值对](https://api.cloudflare.com/#workers-kv-namespace-delete-key-value-pair) `DELETE accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/values/:key_name`。
+- `getKeys`：映射到 [列出命名空间的键](https://api.cloudflare.com/#workers-kv-namespace-list-a-namespace-s-keys) `GET accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/keys`。
+- `clear`：映射到 [删除键值对](https://api.cloudflare.com/#workers-kv-namespace-delete-multiple-key-value-pairs) `DELETE accounts/:account_identifier/storage/kv/namespaces/:namespace_identifier/bulk`。
 
-## CloudFlare R2 (binding)
+## CloudFlare R2（绑定）
 
-> Store data in Cloudflare R2 buckets and access from worker bindings.
+> 在 Cloudflare R2 存储桶中存储数据并通过 Worker 绑定进行访问。
 
 ::warning
-This is an experimental driver! This driver only works in a cloudflare worker environment and cannot be used in other runtime environments such as Node.js (r2-http driver is coming soon)
+这是一个实验性驱动程序！此驱动程序仅在 Cloudflare Worker 环境中有效，无法在其他运行时环境（如 Node.js）中使用（r2-http 驱动程序即将推出）。
 ::
 
 ::read-more{to="https://developers.cloudflare.com/r2/api/workers/workers-api-reference/"}
-Learn more about Cloudflare R2 buckets.
+了解更多关于 Cloudflare R2 存储桶的信息。
 ::
 
-You need to create and assign a R2 bucket. See [R2 Bindings](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/#create-a-binding) for more information.
+您需要创建并分配一个 R2 存储桶。有关更多信息，请参见 [R2 绑定](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/#create-a-binding)。
 
 ```js
 import { createStorage } from "unstorage";
 import cloudflareR2BindingDriver from "unstorage/drivers/cloudflare-r2-binding";
 
-// Using binding name to be picked from globalThis
+// 使用从 globalThis 中选择的绑定名称
 const storage = createStorage({
   driver: cloudflareR2BindingDriver({ binding: "BUCKET" }),
 });
 
-// Directly setting binding
+// 直接设置绑定
 const storage = createStorage({
   driver: cloudflareR2BindingDriver({ binding: globalThis.BUCKET }),
 });
 
-// Using from Durable Objects and Workers using Modules Syntax
+// 使用 Durable Objects 和模块语法从 Workers 中获取
 const storage = createStorage({
   driver: cloudflareR2BindingDriver({ binding: this.env.BUCKET }),
 });
 ```
 
-**Options:**
+**选项：**
 
-- `binding`: Bucket binding or name. Default is `BUCKET`.
-- `base`: Prefix all keys with base.
+- `binding`：存储桶绑定或名称。默认值为 `BUCKET`。
+- `base`：为所有键添加前缀。
 
-**Transaction options:**
+**事务选项：**
 
 - `getItemRaw(key, { type: "..." })`
-  - `type: "object"`: Return the [R2 object body](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/#r2objectbody-definition).
-  - `type: "stream"`: Return body stream.
-  - `type: "blob"`: Return a `Blob`.
-  - `type: "bytes"`: Return an `Uint8Array`.
-  - `type: "arrayBuffer"`: Return an `ArrayBuffer` (default)
+  - `type: "object"`：返回 [R2 对象主体](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/#r2objectbody-definition)。
+  - `type: "stream"`：返回主体流。
+  - `type: "blob"`：返回一个 `Blob`。
+  - `type: "bytes"`：返回一个 `Uint8Array`。
+  - `type: "arrayBuffer"`：返回一个 `ArrayBuffer`（默认）。

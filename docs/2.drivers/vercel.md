@@ -6,14 +6,14 @@ icon: gg:vercel
 
 ## Vercel KV
 
-> Store data in a Vercel KV Store.
+> 在 Vercel KV 存储中存储数据。
 
 ::read-more{to="https://vercel.com/docs/storage/vercel-kv"}
-Learn more about Vercel KV.
+了解更多关于 Vercel KV 的信息。
 ::
 
 > [!NOTE]
-> Please check [Vercel KV Limits](https://vercel.com/docs/storage/vercel-kv/limits).
+> 请检查 [Vercel KV 限制](https://vercel.com/docs/storage/vercel-kv/limits)。
 
 ```js
 import { createStorage } from "unstorage";
@@ -25,12 +25,12 @@ const storage = createStorage({
     // token: "<your secret token>", // KV_REST_API_TOKEN
     // base: "test",
     // env: "KV",
-    // ttl: 60, // in seconds
+    // ttl: 60, // 秒
   }),
 });
 ```
 
-To use, you will need to install `@vercel/kv` dependency in your project:
+要使用，您需要在项目中安装 `@vercel/kv` 依赖：
 
 ```json
 {
@@ -40,30 +40,30 @@ To use, you will need to install `@vercel/kv` dependency in your project:
 }
 ```
 
-**Note:** For driver options type support, you might need to install `@upstash/redis` dev dependency as well.
+**注意：** 对于驱动程序选项类型支持，您可能还需要安装 `@upstash/redis` 开发依赖。
 
-**Options:**
+**选项:**
 
-- `url`: Rest API URL to use for connecting to your Vercel KV store. Default is `KV_REST_API_URL`.
-- `token`: Rest API Token to use for connecting to your Vercel KV store. Default is `KV_REST_API_TOKEN`.
-- `base`: [optional] Prefix to use for all keys. Can be used for namespacing.
-- `env`: [optional] Flag to customize environment variable prefix (Default is `KV`). Set to `false` to disable env inference for `url` and `token` options.
+- `url`: 用于连接到您的 Vercel KV 存储的 REST API URL。默认值为 `KV_REST_API_URL`。
+- `token`: 用于连接到您的 Vercel KV 存储的 REST API 令牌。默认值为 `KV_REST_API_TOKEN`。
+- `base`: [可选] 用于所有键的前缀。可用于命名空间。
+- `env`: [可选] 自定义环境变量前缀的标志（默认值为 `KV`）。设置为 `false` 以禁用 `url` 和 `token` 选项的环境推断。
 
-See [@upstash/redis](https://docs.upstash.com/redis/sdks/javascriptsdk/advanced) for all available options.
+有关所有可用选项，请参见 [@upstash/redis](https://docs.upstash.com/redis/sdks/javascriptsdk/advanced)。
 
 ## Vercel Blob
 
-> Store data in a Vercel Blob Store.
+> 在 Vercel Blob 存储中存储数据。
 
 ::read-more{to="https://vercel.com/docs/storage/vercel-blob"}
-Learn more about Vercel Blob.
+了解更多关于 Vercel Blob 的信息。
 ::
 
 ::warning
-Currently Vercel Blob stores all data with public access.
+当前 Vercel Blob 存储所有数据均为公共访问。
 ::
 
-To use, you will need to install [`@vercel/blob`](https://www.npmjs.com/package/@vercel/blob) dependency in your project:
+要使用，您需要在项目中安装 [`@vercel/blob`](https://www.npmjs.com/package/@vercel/blob) 依赖：
 
 :pm-install{name="@vercel/blob"}
 
@@ -73,17 +73,17 @@ import vercelBlobDriver from "unstorage/drivers/vercel-blob";
 
 const storage = createStorage({
   driver: vercelBlobDriver({
-    access: "public", // Required! Beware that stored data is publicly accessible.
-    // token: "<your secret token>", // or set BLOB_READ_WRITE_TOKEN
+    access: "public", // 必需！请注意，存储的数据是公开可访问的。
+    // token: "<your secret token>", // 或设置 BLOB_READ_WRITE_TOKEN
     // base: "unstorage",
     // envPrefix: "BLOB",
   }),
 });
 ```
 
-**Options:**
+**选项:**
 
-- `access`: Whether the blob should be publicly accessible. (required, must be `public`)
-- `base`: Prefix to prepend to all keys. Can be used for namespacing.
-- `token`: Rest API token to use for connecting to your Vercel Blob store. If not provided, it will be read from the environment variable `BLOB_READ_WRITE_TOKEN`.
-- `envPrefix`: Prefix to use for token environment variable name. Default is `BLOB` (env name = `BLOB_READ_WRITE_TOKEN`).
+- `access`: blob 是否应公开可访问。（必需，必须为 `public`）
+- `base`: 要预先添加到所有键的前缀。可用于命名空间。
+- `token`: 用于连接到您的 Vercel Blob 存储的 REST API 令牌。如果未提供，将从环境变量 `BLOB_READ_WRITE_TOKEN` 中读取。
+- `envPrefix`: 用于令牌环境变量名称的前缀。默认值为 `BLOB`（环境名称 = `BLOB_READ_WRITE_TOKEN`）。

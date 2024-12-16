@@ -2,14 +2,14 @@
 icon: bi:memory
 ---
 
-# Memory
+# 内存
 
-> Keep data in memory.
+> 将数据保存在内存中。
 
-Keeps data in memory using [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map). (default storage)
+使用 [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) 将数据保存在内存中。（默认存储）
 
 ::note
-By default, it is mounted at the top level, so it's unlikely that you will need to mount it again.
+默认情况下，它被挂载在顶层，因此不太可能需要再次挂载它。
 ::
 
 ```js
@@ -19,4 +19,3 @@ import memoryDriver from "unstorage/drivers/memory";
 const storage = createStorage({
   driver: memoryDriver(),
 });
-```

@@ -4,23 +4,23 @@ icon: simple-icons:upstash
 
 # Upstash
 
-> Store data in an Upstash Redis database.
+> 在 Upstash Redis 数据库中存储数据。
 
-## Usage
+## 用法
 
 ::read-more{to="https://upstash.com/"}
-Learn more about Upstash.
+了解更多关于 Upstash 的信息。
 ::
 
 ::note
-Unstorage uses [`@upstash/redis`](https://github.com/upstash/upstash-redis) internally to connect to Upstash Redis.
+Unstorage 内部使用 [`@upstash/redis`](https://github.com/upstash/upstash-redis) 连接到 Upstash Redis。
 ::
 
-To use it, you will need to install `@upstash/redis` in your project:
+要使用它，您需要在项目中安装 `@upstash/redis`：
 
 :pm-install{name="@upstash/redis"}
 
-Usage with Upstash Redis:
+与 Upstash Redis 的用法：
 
 ```js
 import { createStorage } from "unstorage";
@@ -29,21 +29,21 @@ import upstashDriver from "unstorage/drivers/upstash";
 const storage = createStorage({
   driver: upstashDriver({
     base: "unstorage",
-    // url: "", // or set UPSTASH_REDIS_REST_URL env
-    // token: "", // or set UPSTASH_REDIS_REST_TOKEN env
+    // url: "", // 或设置 UPSTASH_REDIS_REST_URL 环境变量
+    // token: "", // 或设置 UPSTASH_REDIS_REST_TOKEN 环境变量
   }),
 });
 ```
 
-**Options:**
+**选项：**
 
-- `base`: Optional prefix to use for all keys. Can be used for namespacing.
-- `url`: The REST URL for your Upstash Redis database. Find it in [the Upstash Redis console](https://console.upstash.com/redis/). Driver uses `UPSTASH_REDIS_REST_URL` environment by default.
-- `token`: The REST token for authentication with your Upstash Redis database. Find it in [the Upstash Redis console](https://console.upstash.com/redis/). Driver uses `UPSTASH_REDIS_REST_TOKEN` environment by default.
-- `ttl`: Default TTL for all items in **seconds**.
+- `base`: 可选前缀，用于所有键。可用于命名空间。
+- `url`: 您的 Upstash Redis 数据库的 REST URL。请在 [Upstash Redis 控制台](https://console.upstash.com/redis/) 中查找。驱动程序默认使用 `UPSTASH_REDIS_REST_URL` 环境。
+- `token`: 用于与您的 Upstash Redis 数据库进行身份验证的 REST 令牌。请在 [Upstash Redis 控制台](https://console.upstash.com/redis/) 中查找。驱动程序默认使用 `UPSTASH_REDIS_REST_TOKEN` 环境。
+- `ttl`: 默认的 TTL，单位为 **秒**，适用于所有项目。
 
-See [@upstash/redis documentation](https://upstash.com/docs/redis/sdks/ts/overview) for all available options.
+有关所有可用选项，请参见 [@upstash/redis 文档](https://upstash.com/docs/redis/sdks/ts/overview)。
 
-**Transaction options:**
+**事务选项：**
 
-- `ttl`: Supported for `setItem(key, value, { ttl: number /* seconds */ })`
+- `ttl`: 支持 `setItem(key, value, { ttl: number /* seconds */ })`。
