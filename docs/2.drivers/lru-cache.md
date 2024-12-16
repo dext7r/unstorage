@@ -2,19 +2,19 @@
 icon: material-symbols:cached-rounded
 ---
 
-# LRU Cache
+# LRU 缓存
 
-> Keeps cached data in memory using LRU Cache.
+> 使用 LRU 缓存在内存中保持缓存数据。
 
-## Usage
+## 用法
 
-Keeps cached data in memory using [LRU Cache](https://www.npmjs.com/package/lru-cache).
+使用 [LRU 缓存](https://www.npmjs.com/package/lru-cache) 在内存中保持缓存数据。
 
-See [`lru-cache`](https://www.npmjs.com/package/lru-cache) for supported options.
+请参阅 [`lru-cache`](https://www.npmjs.com/package/lru-cache) 以获取支持的选项。
 
-By default, [`max`](https://www.npmjs.com/package/lru-cache#max) setting is set to `1000` items.
+默认情况下，[`max`](https://www.npmjs.com/package/lru-cache#max) 设置为 `1000` 项。
 
-A default behavior for [`sizeCalculation`](https://www.npmjs.com/package/lru-cache#sizecalculation) option is implemented based on buffer size of both key and value.
+[`sizeCalculation`](https://www.npmjs.com/package/lru-cache#sizecalculation) 选项的默认行为是基于键和值的缓冲区大小实现的。
 
 ```js
 import { createStorage } from "unstorage";
@@ -23,4 +23,3 @@ import lruCacheDriver from "unstorage/drivers/lru-cache";
 const storage = createStorage({
   driver: lruCacheDriver(),
 });
-```

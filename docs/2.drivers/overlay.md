@@ -4,13 +4,13 @@ icon: carbon:overlay
 
 # Overlay
 
-This is a special driver that creates a multi-layer overlay driver.
+这是一个特殊的驱动程序，创建一个多层叠加驱动程序。
 
-All write operations happen on the top level layer while values are read from all layers.
+所有的写操作都发生在最上面的层级，而值则从所有层级中读取。
 
-When removing a key, a special value `__OVERLAY_REMOVED__` will be set on the top level layer internally.
+当移除一个键时，最上层会内部设置一个特殊值 `__OVERLAY_REMOVED__`。
 
-In the example below, we create an in-memory overlay on top of fs. No changes will be actually written to the disk when setting new keys.
+在下面的示例中，我们在文件系统上创建一个内存叠加，设置新键时不会对磁盘进行实际写入。
 
 ```js
 import { createStorage } from "unstorage";
@@ -23,4 +23,3 @@ const storage = createStorage({
     layers: [memory(), fs({ base: "./data" })],
   }),
 });
-```

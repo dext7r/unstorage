@@ -4,23 +4,23 @@ icon: simple-icons:redis
 
 # Redis
 
-> Store data in a Redis.
+> 将数据存储在Redis中。
 
-## Usage
+## 使用方法
 
 ::read-more{to="https://redis.com"}
-Learn more about Redis.
+了解更多关于Redis的信息。
 ::
 
 ::note
-Unstorage uses [`ioredis`](https://github.com/luin/ioredis) internally to connect to Redis.
+Unstorage使用[`ioredis`](https://github.com/luin/ioredis)作为内部连接Redis的组件。
 ::
 
-To use it, you will need to install `ioredis` in your project:
+要使用它，您需要在项目中安装`ioredis`：
 
 :pm-install{name="ioredis"}
 
-Usage with single Redis instance:
+使用单个Redis实例：
 
 ```js
 import { createStorage } from "unstorage";
@@ -37,9 +37,9 @@ const storage = createStorage({
 });
 ```
 
-Usage with Redis cluster (e.g. AWS ElastiCache or Azure Redis Cache):
+使用Redis集群（例如AWS ElastiCache或Azure Redis Cache）：
 
-⚠️ If you connect to a cluster, you have to use `hastags` as prefix to avoid the redis error `CROSSSLOT Keys in request don't hash to the same slot`. This means, the prefix has to be surrounded by curly braces, which forces the keys into the same hash slot.
+⚠️ 如果您连接到集群，您必须使用`hastags`作为前缀，以避免Redis错误`CROSSSLOT Keys in request don't hash to the same slot`。这意味着，前缀必须用花括号包围，这会强制将键放入同一个哈希槽。
 
 ```js
 const storage = createStorage({
@@ -61,18 +61,18 @@ const storage = createStorage({
 });
 ```
 
-**Options:**
+**选项：**
 
-- `base`: Optional prefix to use for all keys. Can be used for namespacing. Has to be used as hastag prefix for redis cluster mode.
-- `url`: Url to use for connecting to redis. Takes precedence over `host` option. Has the format `redis://<REDIS_USER>:<REDIS_PASSWORD>@<REDIS_HOST>:<REDIS_PORT>`
-- `cluster`: List of redis nodes to use for cluster mode. Takes precedence over `url` and `host` options.
-- `clusterOptions`: Options to use for cluster mode.
-- `ttl`: Default TTL for all items in **seconds**.
+- `base`: 用于所有键的可选前缀。可以用于命名空间。必须用作Redis集群模式的哈希前缀。
+- `url`: 用于连接Redis的URL。优先于`host`选项。格式为`redis://<REDIS_USER>:<REDIS_PASSWORD>@<REDIS_HOST>:<REDIS_PORT>`
+- `cluster`: 用于集群模式的Redis节点列表。优先于`url`和`host`选项。
+- `clusterOptions`: 用于集群模式的选项。
+- `ttl`: 所有项目的默认TTL（秒）。
 
-See [ioredis](https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options) for all available options.
+请参见[ioredis](https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options)以获取所有可用选项。
 
-`lazyConnect` option is enabled by default so that connection happens on first redis operation.
+`lazyConnect`选项默认启用，以便在第一次Redis操作时建立连接。
 
-**Transaction options:**
+**事务选项：**
 
-- `ttl`: Supported for `setItem(key, value, { ttl: number /* seconds */ })`
+- `ttl`: 在`setItem(key, value, { ttl: number /* seconds */ })`中支持。

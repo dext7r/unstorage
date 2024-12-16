@@ -4,15 +4,15 @@ icon: ic:baseline-http
 
 # HTTP
 
-> Use a remote HTTP/HTTPS endpoint as data storage.
+> 使用远程 HTTP/HTTPS 端点作为数据存储。
 
-## Usage
+## 用法
 
 ::note
-Supports built-in [http server](/guide/http-server) methods.
+支持内置的 [http server](/guide/http-server) 方法。
 ::
 
-This driver implements meta for each key including `mtime` (last modified time) and `status` from HTTP headers by making a `HEAD` request.
+该驱动为每个键实现元数据，包括通过发起 `HEAD` 请求获取的 `mtime`（最后修改时间）和 `status`（HTTP 头部）。
 
 ```js
 import { createStorage } from "unstorage";
@@ -23,21 +23,21 @@ const storage = createStorage({
 });
 ```
 
-**Options:**
+**选项:**
 
-- `base`: Base URL for urls (**required**)
-- `headers`: Custom headers to send on all requests
+- `base`: URL 基础路径 (**必填**)
+- `headers`: 所有请求的自定义头部
 
-**Supported HTTP Methods:**
+**支持的 HTTP 方法:**
 
-- `getItem`: Maps to http `GET`. Returns deserialized value if response is ok
-- `hasItem`: Maps to http `HEAD`. Returns `true` if response is ok (200)
-- `getMeta`: Maps to http `HEAD` (headers: `last-modified` => `mtime`, `x-ttl` => `ttl`)
-- `setItem`: Maps to http `PUT`. Sends serialized value using body (`ttl` option will be sent as `x-ttl` header).
-- `removeItem`: Maps to `DELETE`
-- `clear`: Not supported
+- `getItem`: 映射到 HTTP `GET`。如果响应正常，则返回反序列化的值
+- `hasItem`: 映射到 HTTP `HEAD`。如果响应正常（200），则返回 `true`
+- `getMeta`: 映射到 HTTP `HEAD`（头部: `last-modified` => `mtime`, `x-ttl` => `ttl`）
+- `setItem`: 映射到 HTTP `PUT`。使用请求体发送序列化值（`ttl` 选项将作为 `x-ttl` 头部发送）。
+- `removeItem`: 映射到 `DELETE`
+- `clear`: 不支持
 
-**Transaction Options:**
+**事务选项:**
 
-- `headers`: Custom headers to be sent on each operation (`getItem`, `setItem`, etc)
-- `ttl`: Custom `ttl` (in seconds) for supported drivers. Will be mapped to `x-ttl` http header.
+- `headers`: 在每个操作中发送的自定义头部（`getItem`、`setItem` 等）
+- `ttl`: 支持驱动的自定义 `ttl`（以秒为单位）。将映射到 `x-ttl` HTTP 头部。
